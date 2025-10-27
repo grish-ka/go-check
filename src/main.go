@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
+	"sort" // --- Hint: Import the 'sort' package ---
 )
 
 // ItemDetails holds the properties for each item.
@@ -23,34 +25,22 @@ const (
 	Reset = "\x1b[0m"
 )
 
-func main() {
-	// 1. Define the JSON data as a string.
-	// I've expanded on your example with a few more items
-	// to properly test the logic.
-	jsonData := `
-	{
-	  "Buy Groceries": {
-		"check": true,
-		"important": true
-	  },
-	  "Call Mom": {
-		"check": true,
-		"important": false
-	  },
-	  "Pay Rent": {
-		"check": true,
-		"important": true
-	  },
-	  "Walk the Dog": {
-		"check": false,
-		"important": true
-	  },
-	  "Finish Report": {
-		"check": false,
-		"important": false
-	  }
+func checkArgs() {
+	if len(os.Args) < 2 {
+		log.Fatalf("Usage: %sgo%s run %s./src/%s <json-file-path>", Bold, Reset, Bold, Reset)
 	}
-	`
+}
+
+func main() {
+	checkArgs()
+
+	// 1. Read the JSON file from arguments
+	// --- Hint: Always check for errors! ---
+	// os.ReadFile returns the data AND an error.
+	jsonData, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		log.Fatalf("Error reading file %s: %v", os.Args[1], err)
+	}
 
 	// 2. Define a variable to hold the unmarshalled data.
 	// The structure is a map where the key is a string (the item name)
@@ -59,17 +49,30 @@ func main() {
 
 	// 3. Unmarshal (parse) the JSON data.
 	// We pass the JSON data as a byte slice and a pointer to our 'items' map.
-	err := json.Unmarshal([]byte(jsonData), &items)
+	err = json.Unmarshal([]byte(jsonData), &items)
 	if err != nil {
 		// If the JSON is invalid, the program will stop here.
 		log.Fatalf("Error parsing JSON: %v", err)
 	}
 
-	// 4. Iterate through the map and display it like a CLI list.
+	// 4. --- NEW: Get and sort the keys for a stable order ---
+	// Create a slice to hold all the keys from the map
+	var itemNames []string
+	// Loop over the map just to get the keys
+	for name := range items {
+		itemNames = append(itemNames, name)
+	}
+	// Now, sort the slice of keys alphabetically
+	sort.Strings(itemNames)
+
+	// 5. Iterate through the *sorted slice* and display the list.
 	fmt.Println("--- Your Todo List ---")
 
-	// We'll iterate through all items now, not just the filtered ones.
-	for itemName, details := range items {
+	// We now loop over our sorted 'itemNames' slice, not the 'items' map
+	for _, itemName := range itemNames {
+		// --- Hint: Get the details from the map using the sorted key ---
+		details := items[itemName]
+
 		// --- Hint 1: Determine the checkbox prefix ---
 		// We use a simple 'if' statement to decide what string to show.
 		checkboxPrefix := "[ ]" // Default to unchecked
@@ -91,4 +94,5 @@ func main() {
 		}
 	}
 }
+
 

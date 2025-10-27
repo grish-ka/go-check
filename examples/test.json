@@ -1,0 +1,18 @@
+{
+    "This is not checked" : {
+        "check" : false,
+        "important" : false
+    },
+    "This is checked" : {
+        "check" : true,
+        "important" : false
+    },
+    "This is not checked but important" : {
+        "check" : false,
+        "important" : true
+    },
+    "This is checked and important" : {
+        "check" : true,
+        "important" : true
+    }
+}
