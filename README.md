@@ -37,3 +37,10 @@ $ go install github.com/grish-ka/go-check@latest
 
 > Note by dev: <br>
 > If you want a specific version replace `@latest` with `@VersionHere`
+
+> Another Note:
+> you need some modules 
+```bash
+ go get github.com/charmbracelet/bubbletea
+ go get github.com/charmbracelet/lipgloss
+```
