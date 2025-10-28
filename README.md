@@ -27,7 +27,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 # Installation
-
+## Option 1: go install
 1. Install go
 2. Install the package,
 to install the package you run
@@ -39,8 +39,11 @@ $ go install github.com/grish-ka/go-check@latest
 > If you want a specific version replace `@latest` with `@VersionHere`
 
 > Another Note:
-> you need some modules 
+> you need some modules if you are directly building it
 ```bash
  go get github.com/charmbracelet/bubbletea
  go get github.com/charmbracelet/lipgloss
 ```
+## Option 2: .msi Install
+1. go to the latest release and download `go-check.msi`
+2. run it and you have it installed!

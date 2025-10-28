@@ -1,0 +1,18 @@
+<Project Sdk="WixToolset.Sdk/6.0.0-rc.1">
+  <PropertyGroup>
+    <OutputType>Package</OutputType>
+    <SuppressIces>ICE38</SuppressIces>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- This includes the WiX UI extension (for the installer wizard) -->
+    <PackageReference Include="WixToolset.UI.wixext" Version="6.0.0-rc.1" />
+    
+    <!-- This tells the project where to find your installer definition -->
+    <Content Include="go-check.wxs" />
+    
+    <!-- This tells the project to include the EULA file -->
+    <Content Include="License.rtf" />
+  </ItemGroup>
+</Project>
+

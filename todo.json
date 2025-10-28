@@ -1,0 +1,6 @@
+{
+    "Make popup show on top of mainView": {
+        "check": false,
+        "important": true
+    }
+}

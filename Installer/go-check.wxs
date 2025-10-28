@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  This is the main WiX Toolset source file for the go-check installer.
+  It defines all the files, directories, shortcuts, and registry keys
+  that make up the installer.
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+
+    <!-- 
+      Define the package details.
+      Scope="perUser" is key:
+      - Installs for the current user only.
+      - Doesn't require admin rights.
+      - Installs to AppData\Local by default.
+    -->
+    <Package Name="go-check"
+             Manufacturer="grishkka"
+             Version="1.0.0"
+             UpgradeCode="51207e0d-1727-40b3-b6b3-ac566427bf54"
+             Compressed="true"
+             Scope="perUser">
+
+        <MajorUpgrade DowngradeErrorMessage="A newer version of go-check is already installed." />
+        <MediaTemplate EmbedCab="true" />
+        
+        <!-- Define the EULA and UI graphics -->
+        <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+        
+        <!-- Use the "InstallDir" UI, which allows the user to change the install folder -->
+        <!-- We will pre-set the folder to AppData\Local\go-check -->
+        <ui:WixUI Id="WixUI_InstallDir"
+                  InstallDirectory="INSTALLFOLDER" />
+
+        <!-- 
+          Define the directory structure.
+          We install to LocalAppDataFolder (C:\Users\user\AppData\Local)
+          inside a 'go-check' folder.
+        -->
+        <!-- 1. Define the main install directory -->
+        <StandardDirectory Id="LocalAppDataFolder">
+            <!-- *** UPDATED: Removed "ManufacturerFolder" ("grishkka") *** -->
+            <Directory Id="INSTALLFOLDER" Name="go-check" />
+        </StandardDirectory>
+
+        <!-- 2. Define the Start Menu shortcut directory -->
+        <StandardDirectory Id="ProgramMenuFolder">
+            <Directory Id="ApplicationProgramsFolder" Name="go-check"/>
+        </StandardDirectory>
+
+        <!-- 
+          Define what features to install. For a simple app, we just
+          have one feature that installs everything.
+        -->
+        <Feature Id="MainApplication" Title="Main Application" Level="1">
+            <ComponentRef Id="ExecutableComponent" />
+            <ComponentRef Id="ApplicationShortcut" />
+        </Feature>
+        
+        <!-- 
+          Define the components to be installed.
+          Components group files and registry keys.
+        -->
+        
+        <!-- Component 1: The .exe file and the Path modification -->
+        <Component Id="ExecutableComponent" Directory="INSTALLFOLDER" Guid="f3d5b98b-d51e-4e3e-9b21-7a36814b3a8b">
+            <!-- 
+              The file to install.
+              Source="go-check.exe" expects to find this file in the same
+              directory where the 'dotnet build' command is run.
+            -->
+            <File Id="go_check.exe" Source="go-check.exe" KeyPath="yes" />
+            
+            <!-- 
+              Add the install folder to the user's Path.
+              System="no" applies it to the User path, not the System path.
+            -->
+            <Environment Id="PATH"
+                         Name="Path"
+                         Value="[INSTALLFOLDER]"
+                         Permanent="no"
+                         Part="last"
+                         Action="set"
+                         System="no" />
+            
+            <!-- 
+              This component also handles removing the install folder on uninstall.
+              This helps ensure a clean uninstall.
+            -->
+            <RemoveFolder Id="INSTALLFOLDER" On="uninstall"/>
+            <!-- *** UPDATED: Removed the RemoveFolder line for "ManufacturerFolder" *** -->
+        </Component>
+        
+        <!-- Component 2: The Start Menu Shortcut -->
+        <Component Id="ApplicationShortcut" Directory="ApplicationProgramsFolder" Guid="5e4c2a3b-4d3c-4b1c-8d7e-9a5b6c4f3e2d">
+            <Shortcut Id="ApplicationStartMenuShortcut"
+                      Name="go-check"
+                      Description="A simple to-do viewer in Go"
+                      Target="[INSTALLFOLDER]go-check.exe"
+                      WorkingDirectory="INSTALLFOLDER" />
+            
+            <!-- 
+              This tells the installer to remove the Start Menu folder on uninstall.
+              This MUST match the Id of the Directory we created inside ProgramMenuFolder.
+            -->
+            <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+            
+            <!-- 
+              We need a KeyPath for every component. Using a registry key
+              is a standard, stable way to do this.
+              *** UPDATED: Removed "grishkka" from the registry path ***
+            -->
+            <RegistryValue Root="HKCU"
+                           Key="Software\go-check"
+                           Name="installed"
+                           Type="integer"
+                           Value="1"
+                           KeyPath="yes" />
+        </Component>
+
+    </Package>
+</Wix>
+

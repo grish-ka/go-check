@@ -7,6 +7,12 @@
 *.dll
 *.so
 *.dylib
+*.msi
+*.wixpdb
+
+# output of wix toolset
+Installer/bin/
+Installer/obj/
 
 # Test binary, built with `go test -c`
 *.test

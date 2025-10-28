@@ -1,0 +1,14 @@
+{
+    "Release x86_64": {
+        "check": false,
+        "important": true
+    },
+    "Run x86_64": {
+        "check": false,
+        "important": false
+    },
+    "Test x86_64": {
+        "check": false,
+        "important": true
+    }
+}
