@@ -1,5 +1,8 @@
 # go-check
-A simple to-do viewer in go
+A simple to-do viewer in go 
+<p style="text-align: left">
+  <img src="examples/mainMenu.png" />
+</p>
 
 # License
 > Why not? Like what else am I supposed to put here ¯\_(ツ)_/¯
@@ -47,3 +50,36 @@ $ go install github.com/grish-ka/go-check@latest
 ## Option 2: .msi Install
 1. go to the latest release and download `go-check.msi`
 2. run it and you have it installed!
+
+# Usage
+## Creating a todo **json** file
+after you instal go to your directory you want to put your todo **json** file in
+and run
+```powershell
+go-check --new "My first todo!" -file 'exampleTodo.json'
+```
+then to open it run
+```powershell
+go-check -file 'exampleTodo.json'
+```
+<p style="text-align: left">
+  <img src="examples/mainMenu.png" />
+</p>
+
+## Making an new item
+its easy press 'n' in the main menu
+<p style="text-align: left">
+    you will see this
+  <img src="examples/newItem.png" />
+</p>
+
+fill it in and done new item
+## Creating a todo **json** file (GUI)
+
+its easy press 'Shift+N' in the main menu
+<p style="text-align: left">
+    you will see this
+  <img src="examples/newFile.png" />
+</p>
+
+fill it in and done new file
