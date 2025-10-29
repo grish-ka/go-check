@@ -16,7 +16,7 @@
     -->
     <Package Name="go-check"
              Manufacturer="grishkka"
-             Version="1.0.0"
+             Version="1.1.0"
              UpgradeCode="51207e0d-1727-40b3-b6b3-ac566427bf54"
              Compressed="true"
              Scope="perUser">
