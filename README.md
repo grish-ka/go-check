@@ -4,8 +4,19 @@ A simple to-do viewer in go
   <img src="examples/mainMenu.png" />
 </p>
 
+# Contents
+- [License](#license)
+- [Installation](#installation)
+  - [Option 1: go install](#option-1-go-install)
+  - [Option 2: .msi Install](#option-2-msi-install)
+- [Usage](#usage)
+  - [Creating a todo **json** file](#creating-a-todo-json-file)
+  - [Making an new item](#making-an-new-item)
+  - [Creating a todo **json** file (GUI)](#creating-a-todo-json-file-gui)
+- [Building](#building)
+
 # License
-> Why not? Like what else am I supposed to put here ¯\_(ツ)_/¯
+> Why not? Like what else am I supposed to put here ¯\\\_(ツ)\_/¯
 
 MIT License
 
@@ -38,15 +49,9 @@ to install the package you run
 $ go install github.com/grish-ka/go-check@latest
 ```
 
-> Note by dev: <br>
+> [!NOTE]
 > If you want a specific version replace `@latest` with `@VersionHere`
 
-> Another Note:
-> you need some modules if you are directly building it
-```bash
- go get github.com/charmbracelet/bubbletea
- go get github.com/charmbracelet/lipgloss
-```
 ## Option 2: .msi Install
 1. go to the latest release and download `go-check.msi`
 2. run it and you have it installed!
@@ -56,30 +61,43 @@ $ go install github.com/grish-ka/go-check@latest
 after you instal go to your directory you want to put your todo **json** file in
 and run
 ```powershell
-go-check --new "My first todo!" -file 'exampleTodo.json'
+go-check --new "My first todo!" --file 'exampleTodo.json'
 ```
 then to open it run
 ```powershell
-go-check -file 'exampleTodo.json'
+go-check exampleTodo.json
 ```
 <p style="text-align: left">
   <img src="examples/mainMenu.png" />
 </p>
 
 ## Making an new item
-its easy press 'n' in the main menu
+Its easy, first press `n` in the main menu
 <p style="text-align: left">
     you will see this
   <img src="examples/newItem.png" />
 </p>
 
-fill it in and done new item
+then fill it in. Boom you have a new item!
 ## Creating a todo **json** file (GUI)
 
-its easy press 'Shift+N' in the main menu
+Its easy, first press `Shift+N` in the main menu
 <p style="text-align: left">
     you will see this
   <img src="examples/newFile.png" />
 </p>
 
-fill it in and done new file
+then fill it in. Boom new file!
+
+# Building
+
+1. `developer@foobar:~/prj$ git clone https://github.com/grish-ka/go-check.git`
+2. `developer@foobar:~/prj$ cd go-check`
+
+> [!NOTE]
+> You need some modules if you are directly building it, although go does that for you I think
+> ```bash
+ developer@foobar:~/prj/go-check$ go get github.com/charmbracelet/bubbletea
+ developer@foobar:~/prj/go-check$ go get github.com/charmbracelet/lipgloss
+> ```
+3. `developer@foobar:~/prj/go-check$ go build` or `developer@foobar:~/prj/go-check$ go run`
